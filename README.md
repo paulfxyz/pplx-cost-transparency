@@ -65,9 +65,23 @@ There is no Chrome Web Store submission or automatic updater. To update, replace
 
 **Enabling the extension in Comet is not sufficient in the default configuration.** The Complexity and Quorum maintainers document that Comet blocks third-party extensions from operating on `perplexity.ai`, even when the extension itself is installed and enabled ([Complexity's report](https://github.com/pnd280/complexity/blob/nxt/perplexity/extension/docs/articles/comet-enable-extensions-article.md), [Quorum's macOS notes](https://github.com/JacobStephens2/quorum-perplexity-council-tracker/blob/main/docs/comet-setup.md)).
 
-Our initial installed Comet/macOS check reproduced the practical failure: version 1.0.0 was enabled, its files matched the release and its Perplexity origins were granted, but no cost UI or stylesheet was injected. After separate approval and local administrator authorization, a policy exception was added for this extension ID alone on `https://perplexity.ai` and `https://www.perplexity.ai`.
+### Why nothing appeared
+
+This extension relies on a content script to read the visible credit count and add the USD equivalent inside the page. If Comet prevents that script and its stylesheet from loading, the extension can be switched on and correctly installed yet display nothing; ordinary site-access grants do not remove that separate restriction ([Quorum's macOS notes](https://github.com/JacobStephens2/quorum-perplexity-council-tracker/blob/main/docs/comet-setup.md)).
+
+That is what happened in our initial installed Comet/macOS check: version 1.0.0 was enabled, its files matched the release and both Perplexity origins were granted, but neither the cost UI nor the stylesheet was injected. The converter was not failing to calculate dollars; the browser was not allowing the page integration to run.
+
+### What was required to make it work
+
+After separate approval and local administrator authorization, we created a narrowly scoped managed policy at `/Library/Managed Preferences/ai.perplexity.comet.plist`. Its `ExtensionSettings` entry applied only to the installed extension ID, with `runtime_allowed_hosts` limited to `https://perplexity.ai` and `https://www.perplexity.ai`, plus an empty `runtime_blocked_hosts` list for that same extension.
 
 A full Comet restart was necessary in this test; reloading the policy page alone had not picked up the new file. After restart, Comet reported the scoped `ExtensionSettings` policy as `OK`, both USD displays appeared from the installed extension, the session amount followed a real credit-count change, and collapsing/reopening Usage produced no duplicate row.
+
+**I personally confirmed that both dollar amounts were visible in my Comet browser on October 18, 2026.** No new extension build was needed: the successful fix was the approved browser-policy exception and restart, not a change to the conversion code.
+
+We did not unblock every extension, change a global scripting flag or restart a preference daemon. The setup recorded the original policy state and a file hash for guarded rollback; the [setup and undo guide](docs/COMET.md) explains the boundaries and how to preserve existing policies.
+
+### Installation choices and limits
 
 - **Standard-browser route:** Use the normal unpacked installation in a Chrome/Chromium profile that permits the extension. The automated installation tests use Chromium.
 - **Verified scoped Comet route:** The per-extension `ExtensionSettings` / `runtime_allowed_hosts` approach worked in the tested macOS installation. See the [setup and undo guide](docs/COMET.md); this is not a guarantee for every Comet version or managed environment, and the general approach is also documented by another extension maintainer ([Quorum's macOS notes](https://github.com/JacobStephens2/quorum-perplexity-council-tracker/blob/main/docs/comet-setup.md)).

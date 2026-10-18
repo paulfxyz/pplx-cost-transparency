@@ -46,6 +46,8 @@ The following checks then passed on freshly opened live pages, without manually 
 - **Actual live update:** The native session credit count advanced between observations, and the installed extension's USD value matched the updated count.
 - **Collapse and reopen:** The addition was hidden when Usage collapsed and returned once, with the correct value, when reopened.
 
+The author then independently confirmed that both dollar amounts were visible in the browser. This adds direct user acceptance to the automated and live DOM checks, rather than relying only on the test harness.
+
 This verifies the approved, scoped macOS Comet setup, not the default installation or every future Comet build. The extension itself is still version 1.0.0; the successful change was outside the extension, in explicitly approved browser policy.
 
 ## Release check

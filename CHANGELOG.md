@@ -7,6 +7,7 @@ The installed extension now passed live Comet/macOS acceptance after a separatel
 - **Scope:** Only the installed extension ID, and only the two HTTPS Perplexity origins. No all-extensions wildcard or global scripting flag was enabled.
 - **Verification:** Both USD displays, a real session-counter update, native styling and collapse/reopen behavior passed.
 - **Documentation:** Added a scoped setup and undo guide and replaced the previously unverified compatibility status with the observed result.
+- **Author acceptance:** The author confirmed that both amounts were visible; the README now explains why enabling the extension alone was insufficient and what the approved setup required.
 
 ## Documentation correction · 2026-10-18
 
