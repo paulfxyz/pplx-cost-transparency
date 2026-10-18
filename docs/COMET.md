@@ -1,6 +1,9 @@
 # Scoped Comet setup on macOS
 
-Perplexity Cost Transparency 1.0.0 was verified in an installed macOS Comet browser after an explicitly approved exception for that extension alone and a full restart. The default unpacked installation did not inject on Perplexity pages.
+Perplexity Cost Transparency versions 1.0.0 and 1.1.0 were verified in an installed macOS Comet browser after an explicitly approved exception for the loaded extension ID and a full restart. The default unpacked installation did not inject on Perplexity pages, and a later fresh installation in a different directory required setup for its new ID.
+
+> [!WARNING]
+> Do not assume an earlier exception still covers a moved or reinstalled copy. Check the actual loaded directory and ID, then inspect the current policy before choosing `apply` or `migrate`; a previous ID or a deleted policy cannot authorize the new installation.
 
 This is a browser security configuration change, not an automatic extension feature. Do not apply it on a managed device without your administrator's approval; Perplexity documents Comet's managed-policy support, and the general per-extension approach is described by another extension maintainer ([Comet policies and controls](https://www.perplexity.ai/help-center/en/articles/13529668-comet-policies-and-controls), [Quorum's macOS notes](https://github.com/JacobStephens2/quorum-perplexity-council-tracker/blob/main/docs/comet-setup.md)).
 
@@ -96,6 +99,31 @@ For an existing Comet installation:
 Migration accepts the old ID only when its current rule exactly matches the helper's two-host scope, and refuses an already-occupied target entry. It removes the old exception and adds the new one in one policy-file update, preserving other settings.
 
 `undo NEW_EXTENSION_ID` reverses that policy migration and restores the old ID's scoped exception, provided neither relevant entry has been changed incompatibly. It does not restore deleted files or browser registrations, so keep the old copy until you are satisfied.
+
+## Fresh installation after deleting an earlier copy
+
+Deleting the archive is harmless after extraction, but deleting the active extension folder removes files the unpacked installation relies on ([Chrome extension formats](https://developer.chrome.com/docs/chromedriver/extensions)). If you reinstall into another directory, inspect the current registration rather than assuming the old ID or exception still applies ([Chrome's ID notes](https://developer.chrome.com/docs/extensions/mv2/architecture-overview)).
+
+Start by choosing a permanent local folder, extracting the ZIP, and loading the inner directory containing `manifest.json`. Read its actual ID from `chrome://extensions` and use `status` to check the current rule.
+
+| Current policy state | Correct next step |
+| --- | --- |
+| No exception for the new ID, and the old exception is absent | Run `preview NEW_ID`, then `apply NEW_ID` with explicit local approval |
+| The old ID still has the exact scoped rule, and the new ID has no entry | Run `migrate OLD_ID NEW_ID` with explicit local approval |
+| The current ID already has the exact scoped rule | No policy write is needed; check the registered folder, restart if necessary, then verify |
+| A relevant entry conflicts, or a recovery record needs review | Stop and ask the administrator to inspect it; do not overwrite it or delete recovery records to force a retry |
+
+For a genuinely fresh setup, run these commands from the newly loaded extension folder, substituting the ID you just verified:
+
+```sh
+/bin/bash comet/setup.sh status NEW_EXTENSION_ID
+/bin/bash comet/setup.sh preview NEW_EXTENSION_ID
+/bin/bash comet/setup.sh apply NEW_EXTENSION_ID
+```
+
+The last command requests local administrator authorization and a typed `APPLY` confirmation. After it reports success, save your work, fully quit/reopen Comet, then check the policy and both USD displays.
+
+This exact fresh-install path was verified with version 1.1.0 on October 18, 2026. The old policy was absent, so `apply`, not `migrate`, was the appropriate operation; the author confirmed both amounts were visible after restarting.
 
 ## Updates and undo
 

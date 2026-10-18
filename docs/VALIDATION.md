@@ -48,7 +48,22 @@ The following checks then passed on freshly opened live pages, without manually 
 
 The author then independently confirmed that both dollar amounts were visible in the browser. This adds direct user acceptance to the automated and live DOM checks, rather than relying only on the test harness.
 
-This verifies the approved, scoped macOS Comet setup, not the default installation or every future Comet build. The extension itself is still version 1.0.0; the successful change was outside the extension, in explicitly approved browser policy.
+This initial acceptance verifies the approved, scoped macOS Comet setup, not the default installation or every future Comet build. It used extension version 1.0.0; the successful change was outside the extension, in explicitly approved browser policy.
+
+## Fresh version 1.1.0 installation
+
+Later on October 18, 2026, the author removed the earlier copy and policy, then installed version 1.1.0 from the release ZIP into a new permanent directory. Inspection confirmed the actual new path and extension ID, no disabled or withheld permissions, and no existing managed-policy file.
+
+The installed helper's two files matched the verified release hashes, and its read-only preview proposed only the new ID and the two approved HTTPS hosts. The author then ran `apply` locally, authorized the administrator step, typed the required confirmation, and fully restarted Comet.
+
+Post-restart verification confirmed the exact single-ID policy, the expected registered folder/version, and these live-page results without manually injecting the source:
+
+- **Session:** One adjacent cost row, correct conversion, loaded stylesheet and native right alignment.
+- **Organization:** One inline suffix, correct conversion and font, with the original balance preserved.
+- **Collapse/reopen:** The session row hid when collapsed and returned once with the correct value.
+- **User acceptance:** The author confirmed the displays were visible after the fresh setup.
+
+This was a fresh `apply` because the old policy had been removed, not a migration of an existing entry. No real balances, private local paths or installed extension IDs are included in the public report.
 
 ## Release check
 

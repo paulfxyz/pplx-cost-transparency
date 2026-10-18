@@ -10,6 +10,7 @@ Adds an optional, manual macOS Comet helper and documents moving a developer-mod
 - **Relocation:** Explains which files can be deleted, why the active unpacked directory must remain, and how to update an ID-specific exception after moving.
 - **Price-basis wording:** Aligns the tooltip, manifest and overview graphic with the author's `brut`/gross wording; the $0.012-per-credit calculation is unchanged.
 - **Validation:** Adds policy-planner tests and macOS integration tests using redirected temporary fixtures, not the live browser policy.
+- **Fresh-install acceptance:** A real reinstall into a permanent folder with a new ID passed after the helper's approved `apply` and a restart. The README now prominently warns about the required Comet exception, ID changes and the difference between fresh setup and policy migration.
 
 ## Verified scoped Comet setup · 2026-10-18
 

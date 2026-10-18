@@ -14,7 +14,10 @@
 
 </div>
 
-> **Comet needs a separate, explicitly approved setup step.** Both displays were verified in the installed macOS Comet browser after adding a policy exception for this extension alone and fully restarting Comet. The ordinary unpacked install did not work there; see [Comet compatibility](#comet-compatibility) and the [scoped macOS setup guide](docs/COMET.md) before changing browser security configuration.
+> [!WARNING]
+> **Comet: loading the extension alone is not enough in the tested macOS setup.** Comet prevented it from running on Perplexity pages until a local administrator approved a policy exception for this extension's exact ID and the browser was fully restarted. The required setup is explained in [Comet compatibility](#comet-compatibility) and the [scoped macOS setup guide](docs/COMET.md); no global extension unblock is needed.
+>
+> **Moving or reinstalling needs a fresh ID check.** An unpacked extension's ID can change with its directory, so an exception for the old ID will not authorize the new copy ([Chrome's ID notes](https://developer.chrome.com/docs/extensions/mv2/architecture-overview)). Keep the active folder in a permanent location and follow the [relocation or fresh-install instructions](docs/COMET.md#moving-an-unpacked-extension) instead of reusing an old ID blindly.
 
 ## One small extension, two useful numbers
 
@@ -69,6 +72,8 @@ Choose a permanent folder before loading it where possible. If you move an alrea
 
 Version 1.1.0 includes an optional `migrate OLD_ID NEW_ID` helper command for that policy change. It does not move files or re-register the extension for you; see the [relocation checklist](docs/COMET.md#moving-an-unpacked-extension).
 
+If you deleted the previous setup and its policy, use `preview` and `apply` for the newly verified ID rather than `migrate`. If the old scoped exception still exists, use `migrate` to replace it; the helper deliberately stops when its assumptions do not match the actual policy.
+
 ## Comet compatibility
 
 **Enabling the extension in Comet is not sufficient in the default configuration.** The Complexity and Quorum maintainers document that Comet blocks third-party extensions from operating on `perplexity.ai`, even when the extension itself is installed and enabled ([Complexity's report](https://github.com/pnd280/complexity/blob/nxt/perplexity/extension/docs/articles/comet-enable-extensions-article.md), [Quorum's macOS notes](https://github.com/JacobStephens2/quorum-perplexity-council-tracker/blob/main/docs/comet-setup.md)).
@@ -88,6 +93,16 @@ A full Comet restart was necessary in this test; reloading the policy page alone
 **I personally confirmed that both dollar amounts were visible in my Comet browser on October 18, 2026.** No new extension build was needed: the successful fix was the approved browser-policy exception and restart, not a change to the conversion code.
 
 We did not unblock every extension, change a global scripting flag or restart a preference daemon. The setup recorded the original policy state and a file hash for guarded rollback; the [setup and undo guide](docs/COMET.md) explains the boundaries and how to preserve existing policies.
+
+### Why setup was needed again after reinstalling
+
+Later the same day, I removed the earlier copy and policy, extracted version 1.1.0 into a permanent folder, and loaded it again. The new directory produced a different extension ID, and there was no remaining policy entry to authorize that ID.
+
+We verified the actual loaded path and ID, checked the release files, ran the helper's read-only preview, then applied a fresh exception after local administrator approval and a typed `APPLY` confirmation. After a full Comet restart, both dollar displays passed the live checks, the session row survived collapse/reopen without duplication, and I confirmed they were visible.
+
+This was not a changed exchange rate or a broken USD calculation. The earlier issue was Comet's page-access restriction; the reinstall additionally required the exception to match the new installation identity, as described in [Chrome's ID notes](https://developer.chrome.com/docs/extensions/mv2/architecture-overview).
+
+The exact local folder and installed IDs are intentionally omitted here. Use your own current ID from `chrome://extensions`, retain the active folder, and never broaden the exception to every extension just to avoid repeating setup.
 
 ### Optional setup, migration and undo helper
 
