@@ -9,10 +9,12 @@
 
 <img src="docs/hero.svg" width="100%" alt="Credits are a unit. Dollars are context. 50,000 credits equal $600 net at the project's explicit conversion rate.">
 
-<p>A simple Chrome / Comet extension to add more clarity to usage pricing.</p>
-<p><a href="#install-in-chrome-or-comet">Install</a> · <a href="#the-math-no-mystery">The math</a> · <a href="PRIVACY.md">Privacy</a> · <a href="CHANGELOG.md">Changelog</a> · <a href="https://github.com/paulfxyz/ai-credit-checker">AI Credit Checker</a></p>
+<p>A simple Chromium extension to add more clarity to usage pricing, with conditional Comet compatibility.</p>
+<p><a href="#install-in-chrome-or-chromium">Install</a> · <a href="#comet-compatibility">Comet compatibility</a> · <a href="#the-math-no-mystery">The math</a> · <a href="PRIVACY.md">Privacy</a> · <a href="CHANGELOG.md">Changelog</a> · <a href="https://github.com/paulfxyz/ai-credit-checker">AI Credit Checker</a></p>
 
 </div>
+
+> **Comet is not a standard-install success case.** In our installed macOS Comet test, version 1.0.0 was enabled with the correct files and granted Perplexity domains, but neither its UI nor its stylesheet reached the page. Other extension maintainers document Comet's default restriction on `perplexity.ai`; see [Comet compatibility](#comet-compatibility) before installing there ([Complexity's report](https://github.com/pnd280/complexity/blob/nxt/perplexity/extension/docs/articles/comet-enable-extensions-article.md)).
 
 ## One small extension, two useful numbers
 
@@ -41,7 +43,7 @@ Computer shows credits. This extension adds their estimated USD equivalent in th
 
 Screenshots show the actual extension running in Chromium against a small, native-structure test fixture. All balances are sample data; these are not captures of a private account or proof of installation in Comet.
 
-## Install in Chrome or Comet
+## Install in Chrome or Chromium
 
 No build step is required to use the extension. Download the ZIP from [Releases](https://github.com/paulfxyz/pplx-cost-transparency/releases), extract it, and keep the extracted folder somewhere permanent.
 
@@ -57,9 +59,20 @@ These are Chrome's standard [unpacked-extension installation steps](https://deve
 git clone https://github.com/paulfxyz/pplx-cost-transparency.git
 ```
 
-> **Comet compatibility depends on browser policy.** A browser or managed profile may block extensions from scripting `perplexity.ai`, even if the extension loads successfully. If you see “This page cannot be scripted due to an ExtensionsSettings policy,” the extension cannot add its UI in that profile. This project does not bypass browser restrictions; use a browser/profile that permits the extension or ask your administrator.
-
 There is no Chrome Web Store submission or automatic updater. To update, replace the files with a newer release, click the extension's reload control, then reload your Perplexity tabs; to remove it, use **Remove** on the Extensions page and reload the tabs.
+
+## Comet compatibility
+
+**Enabling the extension in Comet is not sufficient in the default configuration.** The Complexity and Quorum maintainers document that Comet blocks third-party extensions from operating on `perplexity.ai`, even when the extension itself is installed and enabled ([Complexity's report](https://github.com/pnd280/complexity/blob/nxt/perplexity/extension/docs/articles/comet-enable-extensions-article.md), [Quorum's macOS notes](https://github.com/JacobStephens2/quorum-perplexity-council-tracker/blob/main/docs/comet-setup.md)).
+
+Our installed Comet/macOS check reproduced the practical failure: version 1.0.0 was enabled, its source files matched the release, the two Perplexity origins were granted and not withheld, and a newly opened session had the expected native markup. Nevertheless, no cost UI or extension stylesheet was injected; the successful temporary DOM preview is not evidence that a loaded extension can run.
+
+- **Standard-browser route:** Use the normal unpacked installation in a Chrome/Chromium profile that permits the extension. The automated installation tests use Chromium.
+- **Possible Comet exception:** A per-extension `ExtensionSettings` / `runtime_allowed_hosts` policy is described in the community setup notes, but it has not yet been verified for this project or this Comet installation ([Quorum's macOS notes](https://github.com/JacobStephens2/quorum-perplexity-council-tracker/blob/main/docs/comet-setup.md)).
+- **Security boundary:** Such an exception changes browser security configuration and can require administrator approval and a full restart. It is not a JavaScript fix, and this extension does not apply one automatically ([Quorum's macOS notes](https://github.com/JacobStephens2/quorum-perplexity-council-tracker/blob/main/docs/comet-setup.md)).
+- **Keep the scope narrow:** Do not assume a global “enable all extensions on Perplexity” patch is equivalent to allowing this one small utility. Perplexity documents support for managed extension policies, but those policies need deliberate administrative review ([Comet policies and controls](https://www.perplexity.ai/help-center/en/articles/13529668-comet-policies-and-controls)).
+
+The restriction is documented for other extensions too; this project has no evidence that it specifically targets cost-transparency tools. An absent row is therefore not, by itself, proof of a broken converter or of pricing-specific interference.
 
 ## The math, no mystery
 

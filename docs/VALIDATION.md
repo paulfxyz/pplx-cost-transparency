@@ -27,7 +27,11 @@ An additional live-page DOM preview on the same date used temporary browser auto
 
 That preview did not install the extension, modify credit values, change billing settings or bypass an extension policy. The temporary tabs were closed after the checks, and no private screenshots or balances were added to the repository.
 
-Comet installation in the user's own profile remains a manual acceptance step. A browser restriction on extensions cannot be validated away by a passing Chromium test, and this project does not change those restrictions.
+An installed Comet/macOS follow-up on October 18, 2026 did not pass: version 1.0.0 was enabled, the manifest and runtime files matched the release byte for byte, and both Perplexity domains were granted with no withheld permissions. The native usage anchor was present in a fresh session, but the extension's row and stylesheet were absent.
+
+No security configuration was changed during that diagnosis. A policy exception has not yet been tested, and a passing Chromium test must not be presented as proof of installed Comet compatibility.
+
+Other extension maintainers document Comet's default restriction on Perplexity pages, consistent with the observed failure ([Complexity's report](https://github.com/pnd280/complexity/blob/nxt/perplexity/extension/docs/articles/comet-enable-extensions-article.md), [Quorum's macOS notes](https://github.com/JacobStephens2/quorum-perplexity-council-tracker/blob/main/docs/comet-setup.md)). See the README's compatibility section rather than assuming that enabling the extension is sufficient.
 
 ## Release check
 

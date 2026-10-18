@@ -1,5 +1,13 @@
 # Changelog
 
+## Documentation correction · 2026-10-18
+
+An installed Comet/macOS follow-up found that the enabled extension did not inject on Perplexity despite matching files and granted host access. The README and validation notes now make the Comet limitation explicit rather than describing it as only a possible managed-profile caveat.
+
+- **No false fix:** The converter and observer have not been changed to imply that JavaScript can override a browser restriction.
+- **No security changes:** No broad extension-enablement patch or browser policy was applied during diagnosis.
+- **Next acceptance step:** A separately approved per-extension policy exception would need to be tested before claiming Comet compatibility.
+
 ## 1.0.0 · 2026-10-18
 
 First public version of Perplexity Cost Transparency. It adds a local USD equivalent to the two requested Perplexity credit displays.
