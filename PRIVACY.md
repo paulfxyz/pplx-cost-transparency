@@ -24,6 +24,14 @@ The extension makes no network requests and persists no information. It does not
 
 The Perplexity website continues making its own requests independently. Downloading releases or viewing this repository contacts GitHub; the README's status badges are hosted by Shields.io, but none are loaded by the running extension.
 
+## Optional macOS Comet helper
+
+The `comet/` helper is separate from the running extension and executes only when you invoke it. It reads the existing Comet managed-policy file and can add, migrate or undo a specifically approved extension exception after local administrator authorization and a typed confirmation.
+
+The helper does not read balances, cookies or browser session history and makes no network requests. It retains original policy snapshots and recovery metadata locally under a private, root-owned application-support directory, so those records may include other pre-existing browser policies; none are transmitted or included in the public repository.
+
+Policy data is passed through private temporary files and stdin, not process arguments. Administrator passwords are handled by the Mac's normal `sudo` prompt and are not collected or logged by the helper.
+
 ## Removal and reporting
 
 Remove the extension in the browser's Extensions page and reload the affected tabs to remove its DOM additions. There is no extension data store to clear.

@@ -2,7 +2,7 @@ const { test } = require("node:test");
 const assert = require("node:assert/strict");
 const { parseCredits, formatCost, USD_PER_CREDIT } = require("../src/cost.js");
 
-test("the fixed net assumption is $0.012 per credit", () => {
+test("the fixed purchase assumption is $0.012 per credit", () => {
   assert.equal(USD_PER_CREDIT, 0.012);
 });
 

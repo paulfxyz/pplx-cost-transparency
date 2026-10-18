@@ -14,7 +14,7 @@ fs.mkdirSync(folder, { recursive: true });
 for (const file of ["manifest.json", "README.md", "LICENSE", "PRIVACY.md", "CHANGELOG.md"]) {
   fs.copyFileSync(path.join(root, file), path.join(folder, file));
 }
-for (const directory of ["src", "docs"]) {
+for (const directory of ["src", "docs", "comet"]) {
   fs.cpSync(path.join(root, directory), path.join(folder, directory), { recursive: true });
 }
 const archive = path.join(dist, `${name}.zip`);

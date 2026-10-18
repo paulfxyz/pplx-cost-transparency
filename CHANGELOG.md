@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.1.0 · 2026-10-18
+
+Adds an optional, manual macOS Comet helper and documents moving a developer-mode installation to a permanent directory. The extension's browser permissions and USD conversion rate are unchanged.
+
+- **Optional helper:** Read-only status/preview, explicitly confirmed setup, ID migration and guarded undo.
+- **Safety:** Rejects wildcard IDs and conflicting entries, retains private recovery snapshots, preserves unrelated policies and detects concurrent changes.
+- **No automatic changes:** Requires macOS and Node.js 20+ only for the optional helper; does not install software, restart browsers, contact a server or change global scripting flags.
+- **Relocation:** Explains which files can be deleted, why the active unpacked directory must remain, and how to update an ID-specific exception after moving.
+- **Price-basis wording:** Aligns the tooltip, manifest and overview graphic with the author's `brut`/gross wording; the $0.012-per-credit calculation is unchanged.
+- **Validation:** Adds policy-planner tests and macOS integration tests using redirected temporary fixtures, not the live browser policy.
+
 ## Verified scoped Comet setup · 2026-10-18
 
 The installed extension now passed live Comet/macOS acceptance after a separately approved per-extension policy exception and a full browser restart. The runtime remains version 1.0.0; this was a browser configuration change, not a converter patch.

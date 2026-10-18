@@ -11,7 +11,7 @@
   const ANCHOR = 'button[aria-label="About session usage"]';
   const OWN_ROW = "[data-pct-row], [data-pct-org]";
   const ORG_LABEL = /^Available\s+(?:org|organization|organisation)\s+credits$/i;
-  const RATE = `$${money.PACK_PRICE_USD.toLocaleString("en-US")} net / ${money.CREDIT_PACK.toLocaleString("en-US")} credits = $${money.USD_PER_CREDIT} per credit`;
+  const RATE = `$${money.PACK_PRICE_USD.toLocaleString("en-US")} gross / ${money.CREDIT_PACK.toLocaleString("en-US")} credits = $${money.USD_PER_CREDIT} per credit`;
   const mounts = new Map();
   const orgMounts = new Map();
   let queued = false;

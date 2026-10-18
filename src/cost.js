@@ -2,7 +2,7 @@
 (function (root) {
   "use strict";
 
-  // A user-supplied net purchase assumption, not an official pricing feed.
+  // A user-supplied gross purchase assumption, not an official pricing feed.
   const CREDIT_PACK = 50_000;
   const PACK_PRICE_USD = 600;
   const USD_PER_CREDIT = PACK_PRICE_USD / CREDIT_PACK;

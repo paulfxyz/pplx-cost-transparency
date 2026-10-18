@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Perplexity Cost Transparency",
-  "version": "1.0.0",
-  "description": "Live USD equivalents for Computer session usage and available org credits. Local-only. Rate: $600 net per 50,000 credits.",
+  "version": "1.1.0",
+  "description": "Live USD equivalents for Computer session usage and available org credits. Local-only. Rate: $600 gross per 50,000 credits.",
   "homepage_url": "https://github.com/paulfxyz/pplx-cost-transparency",
   "content_scripts": [
     {

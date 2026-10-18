@@ -1,6 +1,7 @@
 name: Tests
 on:
   push:
+    branches: [main]
   pull_request:
   release:
     types: [published]
@@ -21,9 +22,19 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:browser
       - run: npm run package
+  macos-helper:
+    runs-on: macos-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: /bin/bash -n comet/setup.sh
+      - run: node tests/comet-macos.cjs
   release-package:
     if: github.event_name == 'release'
-    needs: test
+    needs: [test, macos-helper]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:

@@ -2,12 +2,12 @@
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/version-1.0.0-286348?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-1.1.0-286348?style=for-the-badge)
 ![Manifest V3](https://img.shields.io/badge/extension-Manifest_V3-23382f?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-MIT-286348?style=for-the-badge)
 ![Local only](https://img.shields.io/badge/data-local_only-23382f?style=for-the-badge)
 
-<img src="docs/hero.svg" width="100%" alt="Credits are a unit. Dollars are context. 50,000 credits equal $600 net at the project's explicit conversion rate.">
+<img src="docs/hero.svg" width="100%" alt="Credits are a unit. Dollars are context. 50,000 credits equal $600 gross at the project's explicit conversion rate.">
 
 <p>A simple Chromium extension to add more clarity to usage pricing, with conditional Comet compatibility.</p>
 <p><a href="#install-in-chrome-or-chromium">Install</a> · <a href="#comet-compatibility">Comet compatibility</a> · <a href="#the-math-no-mystery">The math</a> · <a href="PRIVACY.md">Privacy</a> · <a href="CHANGELOG.md">Changelog</a> · <a href="https://github.com/paulfxyz/ai-credit-checker">AI Credit Checker</a></p>
@@ -61,6 +61,14 @@ git clone https://github.com/paulfxyz/pplx-cost-transparency.git
 
 There is no Chrome Web Store submission or automatic updater. To update, replace the files with a newer release, click the extension's reload control, then reload your Perplexity tabs; to remove it, use **Remove** on the Extensions page and reload the tabs.
 
+### Can I delete the download or move the folder?
+
+You can delete the downloaded ZIP after extracting it. An unpacked extension runs from its directory, so the active files must remain available somewhere; they do not have to stay in Downloads ([Chrome extension formats](https://developer.chrome.com/docs/chromedriver/extensions)).
+
+Choose a permanent folder before loading it where possible. If you move an already-loaded extension, load it from the new location and check its new ID; an unpacked extension's ID can change with its directory, so an ID-specific Comet exception may need to move with it ([Chrome's ID notes](https://developer.chrome.com/docs/extensions/mv2/architecture-overview)).
+
+Version 1.1.0 includes an optional `migrate OLD_ID NEW_ID` helper command for that policy change. It does not move files or re-register the extension for you; see the [relocation checklist](docs/COMET.md#moving-an-unpacked-extension).
+
 ## Comet compatibility
 
 **Enabling the extension in Comet is not sufficient in the default configuration.** The Complexity and Quorum maintainers document that Comet blocks third-party extensions from operating on `perplexity.ai`, even when the extension itself is installed and enabled ([Complexity's report](https://github.com/pnd280/complexity/blob/nxt/perplexity/extension/docs/articles/comet-enable-extensions-article.md), [Quorum's macOS notes](https://github.com/JacobStephens2/quorum-perplexity-council-tracker/blob/main/docs/comet-setup.md)).
@@ -80,6 +88,31 @@ A full Comet restart was necessary in this test; reloading the policy page alone
 **I personally confirmed that both dollar amounts were visible in my Comet browser on October 18, 2026.** No new extension build was needed: the successful fix was the approved browser-policy exception and restart, not a change to the conversion code.
 
 We did not unblock every extension, change a global scripting flag or restart a preference daemon. The setup recorded the original policy state and a file hash for guarded rollback; the [setup and undo guide](docs/COMET.md) explains the boundaries and how to preserve existing policies.
+
+### Optional setup, migration and undo helper
+
+Version 1.1.0 adds [`comet/setup.sh`](comet/setup.sh) and its policy planner. Nothing runs automatically: the helper requires macOS and Node.js 20+, while the extension itself remains plain JavaScript/CSS with no runtime dependencies.
+
+From the extracted extension folder or repository root:
+
+```sh
+# Read-only inspection and preview
+/bin/bash comet/setup.sh status YOUR_EXTENSION_ID
+/bin/bash comet/setup.sh preview YOUR_EXTENSION_ID
+
+# Administrator approval plus an explicit APPLY confirmation
+/bin/bash comet/setup.sh apply YOUR_EXTENSION_ID
+
+# Move only the scoped exception after re-registering from another folder
+/bin/bash comet/setup.sh migrate OLD_EXTENSION_ID NEW_EXTENSION_ID
+
+# Undo the helper's change, preserving unrelated current policies
+/bin/bash comet/setup.sh undo YOUR_EXTENSION_ID
+```
+
+Use actual IDs from `chrome://extensions`, not the placeholder text. The helper validates IDs, refuses wildcard IDs and unexpected existing entries, makes local recovery records, detects changes during review, and asks for `APPLY`, `MIGRATE` or `UNDO` before writing.
+
+It does not download software, restart Comet, kill preference daemons or enable every extension. Read the [helper safety and recovery notes](docs/COMET.md#using-the-optional-helper) before running it; an existing matching rule is not silently adopted for undo.
 
 ### Installation choices and limits
 
@@ -187,13 +220,14 @@ npm ci
 npm test
 npx playwright install chromium
 npm run test:browser
+npm run test:comet  # macOS-only, temporary fixtures; no real policy changes
 npm run screenshots
 npm run package
 ```
 
 The browser suite loads the real unpacked extension in isolated Chromium and intercepts navigation with synthetic fixtures. It exercises both displays, updates, rerenders, navigation, error recovery, light/dark inheritance and narrow layouts without signing in.
 
-The packaging script writes a versioned install ZIP and `SHA256SUMS.txt` to `dist/`. It uses an explicit file allowlist and requires the standard `zip` command, available on macOS/Linux or through WSL.
+The packaging script writes a versioned install ZIP and `SHA256SUMS.txt` to `dist/`, including the optional `comet/` helper files. It uses an explicit file allowlist and requires the standard `zip` command, available on macOS/Linux or through WSL.
 
 ## Open source, honestly
 

@@ -54,6 +54,10 @@ This verifies the approved, scoped macOS Comet setup, not the default installati
 
 Version 1.0.0 passed 75 parser, conversion, DOM and manifest tests, plus the actual-extension Chromium browser flows. Light/dark screenshots and 375 px layouts were visually reviewed, including updated and unavailable states, without finding clipping, duplicated additions or stale fallback values in the covered cases.
 
+Version 1.1.0 passed 96 unit, DOM, manifest and policy-planner tests plus the Chromium extension flows. Its macOS helper integration tests exercised the actual shell and native plist tools against redirected temporary fixtures: read-only status/preview, cancellation, invalid IDs, scoped apply, repeated apply, undo, preserving unrelated later changes, refusing conflicting changes, ID migration and concurrent-edit detection.
+
+The macOS fixture copy explicitly disables elevation/ownership changes and redirects both protected paths before execution. It cannot request administrator access or target the live managed-policy file; the real file's hash was unchanged after the local test, and the production helper's `status` command confirmed the existing rule without modifying it.
+
 The test suite is a regression check for the documented fixtures, not a guarantee against future website changes. See the validation boundary above for what remains manual.
 
 ## Run the checks
@@ -63,6 +67,7 @@ npm ci
 npm test
 npx playwright install chromium
 npm run test:browser
+npm run test:comet
 npm run screenshots
 npm run package
 ```
