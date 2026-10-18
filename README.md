@@ -63,7 +63,7 @@ There is no Chrome Web Store submission or automatic updater. To update, replace
 
 ## The math, no mystery
 
-The project uses one explicit assumption supplied by its author: **50,000 credits cost $600 net**. It is a fixed conversion assumption, not a claim about every Perplexity plan or an official pricing feed.
+The project uses one explicit assumption supplied by its author: **50,000 credits cost $600 brut**. It is a fixed conversion assumption, not a claim about every Perplexity plan or an official pricing feed.
 
 ```text
 USD per credit = 600 / 50,000 = 0.012
