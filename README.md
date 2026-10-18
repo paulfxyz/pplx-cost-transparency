@@ -14,7 +14,7 @@
 
 </div>
 
-> **Comet is not a standard-install success case.** In our installed macOS Comet test, version 1.0.0 was enabled with the correct files and granted Perplexity domains, but neither its UI nor its stylesheet reached the page. Other extension maintainers document Comet's default restriction on `perplexity.ai`; see [Comet compatibility](#comet-compatibility) before installing there ([Complexity's report](https://github.com/pnd280/complexity/blob/nxt/perplexity/extension/docs/articles/comet-enable-extensions-article.md)).
+> **Comet needs a separate, explicitly approved setup step.** Both displays were verified in the installed macOS Comet browser after adding a policy exception for this extension alone and fully restarting Comet. The ordinary unpacked install did not work there; see [Comet compatibility](#comet-compatibility) and the [scoped macOS setup guide](docs/COMET.md) before changing browser security configuration.
 
 ## One small extension, two useful numbers
 
@@ -65,10 +65,12 @@ There is no Chrome Web Store submission or automatic updater. To update, replace
 
 **Enabling the extension in Comet is not sufficient in the default configuration.** The Complexity and Quorum maintainers document that Comet blocks third-party extensions from operating on `perplexity.ai`, even when the extension itself is installed and enabled ([Complexity's report](https://github.com/pnd280/complexity/blob/nxt/perplexity/extension/docs/articles/comet-enable-extensions-article.md), [Quorum's macOS notes](https://github.com/JacobStephens2/quorum-perplexity-council-tracker/blob/main/docs/comet-setup.md)).
 
-Our installed Comet/macOS check reproduced the practical failure: version 1.0.0 was enabled, its source files matched the release, the two Perplexity origins were granted and not withheld, and a newly opened session had the expected native markup. Nevertheless, no cost UI or extension stylesheet was injected; the successful temporary DOM preview is not evidence that a loaded extension can run.
+Our initial installed Comet/macOS check reproduced the practical failure: version 1.0.0 was enabled, its files matched the release and its Perplexity origins were granted, but no cost UI or stylesheet was injected. After separate approval and local administrator authorization, a policy exception was added for this extension ID alone on `https://perplexity.ai` and `https://www.perplexity.ai`.
+
+A full Comet restart was necessary in this test; reloading the policy page alone had not picked up the new file. After restart, Comet reported the scoped `ExtensionSettings` policy as `OK`, both USD displays appeared from the installed extension, the session amount followed a real credit-count change, and collapsing/reopening Usage produced no duplicate row.
 
 - **Standard-browser route:** Use the normal unpacked installation in a Chrome/Chromium profile that permits the extension. The automated installation tests use Chromium.
-- **Possible Comet exception:** A per-extension `ExtensionSettings` / `runtime_allowed_hosts` policy is described in the community setup notes, but it has not yet been verified for this project or this Comet installation ([Quorum's macOS notes](https://github.com/JacobStephens2/quorum-perplexity-council-tracker/blob/main/docs/comet-setup.md)).
+- **Verified scoped Comet route:** The per-extension `ExtensionSettings` / `runtime_allowed_hosts` approach worked in the tested macOS installation. See the [setup and undo guide](docs/COMET.md); this is not a guarantee for every Comet version or managed environment, and the general approach is also documented by another extension maintainer ([Quorum's macOS notes](https://github.com/JacobStephens2/quorum-perplexity-council-tracker/blob/main/docs/comet-setup.md)).
 - **Security boundary:** Such an exception changes browser security configuration and can require administrator approval and a full restart. It is not a JavaScript fix, and this extension does not apply one automatically ([Quorum's macOS notes](https://github.com/JacobStephens2/quorum-perplexity-council-tracker/blob/main/docs/comet-setup.md)).
 - **Keep the scope narrow:** Do not assume a global “enable all extensions on Perplexity” patch is equivalent to allowing this one small utility. Perplexity documents support for managed extension policies, but those policies need deliberate administrative review ([Comet policies and controls](https://www.perplexity.ai/help-center/en/articles/13529668-comet-policies-and-controls)).
 

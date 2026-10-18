@@ -1,12 +1,20 @@
 # Changelog
 
+## Verified scoped Comet setup · 2026-10-18
+
+The installed extension now passed live Comet/macOS acceptance after a separately approved per-extension policy exception and a full browser restart. The runtime remains version 1.0.0; this was a browser configuration change, not a converter patch.
+
+- **Scope:** Only the installed extension ID, and only the two HTTPS Perplexity origins. No all-extensions wildcard or global scripting flag was enabled.
+- **Verification:** Both USD displays, a real session-counter update, native styling and collapse/reopen behavior passed.
+- **Documentation:** Added a scoped setup and undo guide and replaced the previously unverified compatibility status with the observed result.
+
 ## Documentation correction · 2026-10-18
 
 An installed Comet/macOS follow-up found that the enabled extension did not inject on Perplexity despite matching files and granted host access. The README and validation notes now make the Comet limitation explicit rather than describing it as only a possible managed-profile caveat.
 
 - **No false fix:** The converter and observer have not been changed to imply that JavaScript can override a browser restriction.
 - **No security changes:** No broad extension-enablement patch or browser policy was applied during diagnosis.
-- **Next acceptance step:** A separately approved per-extension policy exception would need to be tested before claiming Comet compatibility.
+- **Acceptance boundary at that stage:** A separately approved policy exception still needed testing. The subsequent verified setup is recorded above.
 
 ## 1.0.0 · 2026-10-18
 
