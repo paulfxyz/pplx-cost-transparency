@@ -195,7 +195,7 @@ Transparent assumptions matter as much as visible numbers. The rate, source code
 
 ### An open invitation to the Perplexity team
 
-If the Perplexity team is reading this, please feel free to [contact me through this repository](https://github.com/paulfxyz/pplx-cost-transparency/issues). I would be open to becoming a product evangelist if you address these issues, make costs genuinely transparent, and back open-source initiatives with practical support, including a modest credit grant for this work.
+If the Perplexity team is reading this, please feel free to [contact me through this repository]([https://github.com/paulfxyz/pplx-cost-transparency/issues](https://github.com/paulfxyz/mediakit/)). I would be open to becoming a product evangelist if you address these issues, make costs genuinely transparent, and back open-source initiatives with practical support, including a modest credit grant for this work.
 
 I would much rather help improve a product I can confidently recommend than keep building workarounds for it. This is an invitation to a constructive conversation, not just a complaint.
 
