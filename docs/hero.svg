@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="560" viewBox="0 0 1440 560" role="img" aria-labelledby="title desc">
+  <title id="title">Perplexity Cost Transparency</title>
+  <desc id="desc">Credits are a unit. Dollars are context. A minimal browser extension with a transparent conversion of 50,000 credits to 600 US dollars net, or 0.012 dollars per credit.</desc>
+  <rect width="1440" height="560" rx="20" fill="#f4f6f3"/>
+  <g font-family="'Inter', 'Helvetica Neue', sans-serif">
+    <text x="72" y="72" fill="#456253" font-size="17" font-weight="600" letter-spacing="2">PERPLEXITY COST TRANSPARENCY</text>
+    <text x="72" y="183" fill="#172a21" font-size="62" font-weight="600" letter-spacing="-2">Credits are a unit.</text>
+    <text x="72" y="259" fill="#286348" font-size="62" font-weight="600" letter-spacing="-2">Dollars are context.</text>
+    <text x="76" y="322" fill="#4c6054" font-size="22">A little more clarity, right where you work.</text>
+    <text x="76" y="357" fill="#4c6054" font-size="22">Session usage. Organization balance. Same honest math.</text>
+    <path d="M76 415H724" stroke="#cfd9d0" stroke-width="1"/>
+    <text x="76" y="464" fill="#344c3d" font-size="17" font-weight="500">CHROME / COMET</text>
+    <text x="294" y="464" fill="#344c3d" font-size="17" font-weight="500">LOCAL ONLY</text>
+    <text x="466" y="464" fill="#344c3d" font-size="17" font-weight="500">MIT LICENSE</text>
+    <rect x="824" y="106" width="544" height="356" rx="16" fill="#ffffff" stroke="#d8e0d9"/>
+    <text x="864" y="157" fill="#5d6f62" font-size="16" font-weight="600" letter-spacing="1.5">THE CONVERSION, IN PLAIN SIGHT</text>
+    <text x="864" y="226" fill="#172a21" font-size="40" font-weight="600">50,000 credits</text>
+    <text x="864" y="292" fill="#286348" font-size="52" font-weight="600">= $600.00</text>
+    <text x="1153" y="290" fill="#5d6f62" font-size="23">net</text>
+    <path d="M864 325H1328" stroke="#e1e6df"/>
+    <text x="864" y="373" fill="#172a21" font-size="23" font-weight="500">$0.012 per credit</text>
+    <text x="864" y="412" fill="#5d6f62" font-size="17">Explicit assumption. Not an invoice.</text>
+    <text x="1368" y="519" fill="#617266" text-anchor="end" font-size="15">An independent open-source utility by Paul Fleury</text>
+  </g>
+</svg>

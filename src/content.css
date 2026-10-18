@@ -1,0 +1,42 @@
+/* Native row classes supply Perplexity's current font and theme colors. */
+[data-pct-row] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+[data-pct-row] .pct-icon {
+  display: inline-flex;
+  flex: 0 0 16px;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 20px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+[data-pct-row] .pct-label {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+[data-pct-row] .pct-value {
+  flex: 0 0 auto;
+  margin-inline-start: auto;
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+[data-pct-org] {
+  display: inline;
+  margin-inline-start: 0.35em;
+  white-space: nowrap;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  color: inherit;
+}

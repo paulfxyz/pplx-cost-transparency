@@ -1,0 +1,173 @@
+# Perplexity Cost Transparency
+
+<div align="center">
+
+![Version](https://img.shields.io/badge/version-1.0.0-286348?style=for-the-badge)
+![Manifest V3](https://img.shields.io/badge/extension-Manifest_V3-23382f?style=for-the-badge)
+![License](https://img.shields.io/badge/license-MIT-286348?style=for-the-badge)
+![Local only](https://img.shields.io/badge/data-local_only-23382f?style=for-the-badge)
+
+<img src="docs/hero.svg" width="100%" alt="Credits are a unit. Dollars are context. 50,000 credits equal $600 net at the project's explicit conversion rate.">
+
+<p>A simple Chrome / Comet extension to add more clarity to usage pricing.</p>
+<p><a href="#install-in-chrome-or-comet">Install</a> · <a href="#the-math-no-mystery">The math</a> · <a href="PRIVACY.md">Privacy</a> · <a href="CHANGELOG.md">Changelog</a> · <a href="https://github.com/paulfxyz/ai-credit-checker">AI Credit Checker</a></p>
+
+</div>
+
+## One small extension, two useful numbers
+
+Computer shows credits. This extension adds their estimated USD equivalent in the same interface, without replacing the original number.
+
+- **Session usage:** A dollar icon, `Cost equi.` and a right-aligned USD amount, directly below the native Session usage row.
+- **Organization balance:** A parenthesized equivalent beside Available org credits on the organization Usage page, such as `50,000 ($600.00)`.
+- **Live updates:** Both follow changes to the displayed credits, including text updates, panel rerenders and navigation within the site.
+- **Nothing extra:** No popup, dashboard, login, API key, background service, telemetry or runtime dependencies.
+
+<table>
+  <tr>
+    <th align="left">Session usage · Light</th>
+    <th align="left">Session usage · Dark</th>
+  </tr>
+  <tr>
+    <td><img src="docs/session-light.png" width="340" alt="Light-mode session panel with 218.77 credits and the new Cost equi. row showing $2.63."></td>
+    <td><img src="docs/session-dark.png" width="340" alt="Dark-mode session panel with the same cost row and native theme colors."></td>
+  </tr>
+</table>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/organization-dark.png">
+  <img src="docs/organization-light.png" width="640" alt="Organization Usage card showing Available org credits of 50,000 with ($600.00) beside the balance.">
+</picture>
+
+Screenshots show the actual extension running in Chromium against a small, native-structure test fixture. All balances are sample data; these are not captures of a private account or proof of installation in Comet.
+
+## Install in Chrome or Comet
+
+No build step is required to use the extension. Download the ZIP from [Releases](https://github.com/paulfxyz/pplx-cost-transparency/releases), extract it, and keep the extracted folder somewhere permanent.
+
+1. Open `chrome://extensions` in the browser where you use Perplexity.
+2. Enable **Developer mode**.
+3. Click **Load unpacked** and select the extracted folder containing `manifest.json`.
+4. Reload any already-open Perplexity tabs.
+5. Open a Computer session and expand **Usage**, or visit [organization Usage](https://www.perplexity.ai/account/org/credits-usage).
+
+These are Chrome's standard [unpacked-extension installation steps](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world). You can also clone the repository and select its root folder instead:
+
+```sh
+git clone https://github.com/paulfxyz/pplx-cost-transparency.git
+```
+
+> **Comet compatibility depends on browser policy.** A browser or managed profile may block extensions from scripting `perplexity.ai`, even if the extension loads successfully. If you see “This page cannot be scripted due to an ExtensionsSettings policy,” the extension cannot add its UI in that profile. This project does not bypass browser restrictions; use a browser/profile that permits the extension or ask your administrator.
+
+There is no Chrome Web Store submission or automatic updater. To update, replace the files with a newer release, click the extension's reload control, then reload your Perplexity tabs; to remove it, use **Remove** on the Extensions page and reload the tabs.
+
+## The math, no mystery
+
+The project uses one explicit assumption supplied by its author: **50,000 credits cost $600 net**. It is a fixed conversion assumption, not a claim about every Perplexity plan or an official pricing feed.
+
+```text
+USD per credit = 600 / 50,000 = 0.012
+USD equivalent = displayed credits × 0.012
+```
+
+| Displayed credits | USD equivalent |
+| ---: | ---: |
+| 1 | $0.01 |
+| 100 | $1.20 |
+| 218.77 | $2.63 |
+| 1,000 | $12.00 |
+| 50,000 | $600.00 |
+
+Amounts are formatted in USD to two decimal places. A positive equivalent below one cent shows `<$0.01` rather than implying it is free.
+
+Hover over either addition to see the rate and qualification. The constants are intentionally easy to audit or change in [`src/cost.js`](src/cost.js); reload the extension and page after a change.
+
+- **Equivalent, not invoice:** Taxes, discounts, included credits, promotions, different purchase rates and provider billing adjustments are not modeled.
+- **Usage versus balance:** The session row estimates the equivalent of credits used. The organization suffix estimates the equivalent of the available shared pool, not money spent, an individual allowance or a cash-redeemable balance.
+- **As fresh as the source:** The extension follows the visible number. It cannot make delayed or rounded provider reporting more precise, refresh an account independently, or reveal unreported charges.
+- **Visibility, not enforcement:** It does not predict task costs, impose a spending cap, pause work or change billing settings.
+
+## Why this exists
+
+Credit-based interfaces add a layer of mental arithmetic between an action and its economic cost. We should not have to keep a calculator open to understand what a session represents in dollars.
+
+### The irony, and the red flag
+
+Yes, this open-source code was, ironically, designed with **Perplexity Computer**. I am using the product to fix a cost-transparency problem in the product.
+
+I am an **Enterprise Max customer spending thousands per month**. This criticism comes from sustained, paid use, not a passing impression from someone who has never used the service.
+
+I find Perplexity's pricing strategy dubious. The way costs are labeled, surfaced, or sometimes not made available is, in my view, not transparent enough to give customers real control.
+
+Perplexity also declined my request for support for my open-source work, including a modest grant of credits. Combined with the opacity I experience around costs, that is a **RED FLAG** for me.
+
+I am not going to rank competing vendors here. In my opinion, there are already better alternatives for builders and, especially, large companies that take cost control seriously, including sovereign and self-hosted solutions.
+
+This is my experience and assessment as the project's author. The extension is a quick, open-source UI fix that puts the conversion in plain sight, not an endorsement of the pricing model or a claim to audit the underlying billing.
+
+### Two complementary cost-control tools
+
+For me, **Perplexity Cost Transparency and AI Credit Checker are critical parts of keeping AI costs under control**. They address two different questions:
+
+- **Perplexity Cost Transparency:** “What does this session's credit usage represent in USD, and what is the equivalent of the available organization pool?”
+- **[AI Credit Checker](https://github.com/paulfxyz/ai-credit-checker):** “What balances are available across my tools?” The companion macOS app monitors Perplexity, OpenRouter, Fly.io and Runware from the menu bar.
+
+Together, they make cost information easier to see and compare. The goal is to avoid being left in the dark by non-transparent pricing policies or credit abstractions, not to suggest that a local conversion can audit a provider's billing.
+
+Transparent assumptions matter as much as visible numbers. The rate, source code and limitations are all public, so the tool can be inspected rather than simply trusted.
+
+### An open invitation to the Perplexity team
+
+If the Perplexity team is reading this, please feel free to [contact me through this repository](https://github.com/paulfxyz/pplx-cost-transparency/issues). I would be open to becoming a product evangelist if you address these issues, make costs genuinely transparent, and back open-source initiatives with practical support, including a modest credit grant for this work.
+
+I would much rather help improve a product I can confidently recommend than keep building workarounds for it. This is an invitation to a constructive conversation, not just a complaint.
+
+## Small by design
+
+```text
+Displayed session credits ──→ Cost equi.     $2.63
+                             shared rate: $0.012 / credit
+Available org credits ──────→ 50,000 ($600.00)
+
+DOM change → local conversion → updated text
+```
+
+The extension uses a `MutationObserver`, not periodic network polling. It preserves the native values, reuses the site's row styles, batches updates and avoids unnecessary writes.
+
+Only the English Session usage information button and the exact Available org credits / organization credits / organisation credits labels are supported. It deliberately avoids reading refill amounts, grant history or member-usage totals as the available pool.
+
+For single-page navigation, the manifest permits content scripts on `https://www.perplexity.ai/*` and `https://perplexity.ai/*`. UI changes are restricted in code to `/computer/tasks/<session>` and `/account/org/credits-usage`; there are no privileged API permissions and no access to unrelated sites.
+
+## Privacy and limitations
+
+All conversion happens inside the browser. The extension does not send network requests, store balances, read cookies, intercept APIs or collect account/session history; see [Privacy](PRIVACY.md).
+
+- **DOM changes can break detection:** The host website controls its markup. If a label or layout is no longer recognized, the extension may show no addition rather than guess.
+- **Unreadable is not zero:** Recognized loading states show `Unavailable`. Unsupported organization count formats hide the suffix until a readable balance returns.
+- **Compact values are not invented:** Counts such as `50k` are not expanded into a falsely precise balance.
+- **Browser policy takes precedence:** Passing Chromium tests does not establish that a managed Chrome profile or Comet allows the extension on Perplexity pages.
+
+The current validation approach and manual acceptance boundary are documented in [Validation](docs/VALIDATION.md). Please report a changed layout with a redacted screenshot rather than sharing account data.
+
+## Develop and test
+
+Node.js 20 or later is needed only for development. The installed extension itself is plain JavaScript and CSS.
+
+```sh
+npm ci
+npm test
+npx playwright install chromium
+npm run test:browser
+npm run screenshots
+npm run package
+```
+
+The browser suite loads the real unpacked extension in isolated Chromium and intercepts navigation with synthetic fixtures. It exercises both displays, updates, rerenders, navigation, error recovery, light/dark inheritance and narrow layouts without signing in.
+
+The packaging script writes a versioned install ZIP and `SHA256SUMS.txt` to `dist/`. It uses an explicit file allowlist and requires the standard `zip` command, available on macOS/Linux or through WSL.
+
+## Open source, honestly
+
+Designed and built by Paul Fleury with Perplexity Computer, as a small practical tool rather than an authoritative billing system. The code is intentionally readable, with tests and limitations published alongside it.
+
+This is an independent community project, not affiliated with or endorsed by Perplexity or Google. The source code and original documentation graphics are available under the [MIT License](LICENSE).
