@@ -2,6 +2,8 @@ name: Tests
 on:
   push:
   pull_request:
+  release:
+    types: [published]
 permissions:
   contents: read
 jobs:
@@ -19,3 +21,21 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:browser
       - run: npm run package
+  release-package:
+    if: github.event_name == 'release'
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: node scripts/package.cjs
+      - name: Attach the tested install bundle
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: gh release upload "$RELEASE_TAG" dist/pplx-cost-transparency-*.zip dist/SHA256SUMS.txt --repo "$GITHUB_REPOSITORY" --clobber
